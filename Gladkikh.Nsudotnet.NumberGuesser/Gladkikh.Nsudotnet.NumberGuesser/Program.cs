@@ -13,9 +13,9 @@ namespace Gladkikh.Nsudotnet.NumberGuesser
         {
             Console.WriteLine("Enter you name, bitch");
             String name = Console.ReadLine();
-            Console.WriteLine("Hi, " + name);
+            Console.WriteLine("Hi, {0} ", name);
             Random random = new Random();
-            int unknownNumber = random.Next(0, 101);
+            int unknownNumber = random.Next(0, 11);
             bool guessed = false;
             List<String> history = new List<string>(1000);
             String[] message =
@@ -36,7 +36,7 @@ namespace Gladkikh.Nsudotnet.NumberGuesser
                     String answer = Console.ReadLine();
                     if (answer.Contains("q"))
                     {
-                        Console.WriteLine("Sorry, " + name);
+                        Console.WriteLine("Sorry, {0} ", name);
                         guessed = true;
                         Environment.Exit(0);
                     }
@@ -47,21 +47,21 @@ namespace Gladkikh.Nsudotnet.NumberGuesser
                         if (userNumber < unknownNumber)
                         {
                             Console.WriteLine("Your number is less than the specified");
-                            history.Add(userNumber + " less");
+                            history.Add(string.Format("{0} less", userNumber));
                         }
                         else
                         {
                             if (userNumber > unknownNumber)
                             {
                                 Console.WriteLine("Your number is greater than the specified");
-                                history.Add(userNumber + " greater");
+                                history.Add(string.Format("{0} greater", userNumber));
                             }
                             else
                             {
                                 guessed = true;
                                 time.Stop();
                                 history.Add(userNumber + " that number was guessed");
-                                Console.WriteLine("NOT BAD, " + name + "\n" + "The number of attempts: " + count + "\n" + "Your time: " + time.Elapsed.Minutes);
+                                Console.WriteLine("\nNOT BAD, {0} \n\nThe number of attempts: {1} \nYour time:\n {2}\nHistory:" , name, count, time.Elapsed.Minutes);
                                 int size = history.Count;
                                 for (var j = 0; j < size; j++)
                                 {
@@ -76,7 +76,7 @@ namespace Gladkikh.Nsudotnet.NumberGuesser
                 if (!guessed)
                 {
                     Console.WriteLine("\n");
-                    Console.WriteLine(message[random.Next(0, 4)] + ", " + name);
+                    Console.WriteLine("{1}, {0} ", name, message[random.Next(0, 4)]);
                 }
 
             }
