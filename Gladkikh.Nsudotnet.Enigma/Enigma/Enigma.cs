@@ -10,9 +10,9 @@ namespace Gladkikh.Nsudotnet.Enigma
 {
     class Enigma
     {
-        public static void encrypt(string inputFile, string _algorithm, string outputFile)
+        public static void Encrypt(string inputFile, string _algorithm, string outputFile)
         {
-            var algorithm = getAlgorithmName(_algorithm);
+            var algorithm = GetAlgorithmName(_algorithm);
 
             algorithm.GenerateKey();
             algorithm.GenerateIV();
@@ -41,9 +41,9 @@ namespace Gladkikh.Nsudotnet.Enigma
             File.WriteAllLines(keyFilePath, info);
         }
 
-        public static void decrypt(string inputFile, string _algorithm, string keyFile, string outputFile)
+        public static void Decrypt(string inputFile, string _algorithm, string keyFile, string outputFile)
         {
-            var cryptAlgorithm = getAlgorithmName(_algorithm);
+            var cryptAlgorithm = GetAlgorithmName(_algorithm);
 
             string[] info = File.ReadAllLines(keyFile);
             byte[]rgbKkey = Convert.FromBase64String(info[0]);
@@ -64,7 +64,7 @@ namespace Gladkikh.Nsudotnet.Enigma
             }
         }
 
-        private static SymmetricAlgorithm getAlgorithmName(string _algorithm)
+        private static SymmetricAlgorithm GetAlgorithmName(string _algorithm)
         {
             SymmetricAlgorithm algorithm;
             
