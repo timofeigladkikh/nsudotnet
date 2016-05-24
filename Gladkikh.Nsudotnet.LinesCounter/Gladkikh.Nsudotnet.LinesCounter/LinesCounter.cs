@@ -26,62 +26,32 @@ namespace Gladkikh.Nsudotnet.LinesCounter
                 using (var streamReader = new StreamReader(file))
                 {
                     int count = 0;
-                    bool newLine = true;
                     bool multiComment = false;
-                    bool comment = false;
+                    string line = "";
 
-                    while (!streamReader.EndOfStream)
+                    while ((line = streamReader.ReadLine()) != null)
                     {
-                        char symbol = (char)streamReader.Read();
-                        
-                        if (symbol == '\r' || symbol == ' ')
-                        {
-                            continue;
-                        }
+                        Console.WriteLine(line);
 
-                        if (symbol == '/' && !comment)
-                        {
-                            symbol = (char)streamReader.Read();
+                        if (line.Equals("") || line.StartsWith("//")) continue;
 
-                            switch (symbol)
-                            {
-                                case '/':
-                                    comment = true;
-                                    continue;  
-                                case '*':
-                                    multiComment = true;
-                                    continue;         
-                            }
-                        }
+                        if (line.StartsWith("/*")) multiComment = true;
 
-                        if (multiComment && symbol == '*')
-                        {
-                            symbol = (char)streamReader.Read();      
-                            
-                            if (symbol == '/')
-                            {
-                                multiComment = false;
-                                continue;
-                            }
-                        }
-                        
-                        if (symbol == '\n')
-                        {
-                            newLine = true;
-                            if (comment)
-                            {
-                                comment = false;
-                            }
-                            continue;
-                        }
-
-                        if (newLine && !comment && !multiComment)
+                        if (!multiComment)
                         {
                             count++;
-                            newLine = false;
+                            Console.WriteLine(count);
                         }
+
+                        if (line.EndsWith("*/")) multiComment = false;
+
                     }
                     amount += count;
+                    count = 0;
+
+/*
+test                  
+*/
                 }
             }
             Console.WriteLine("Amount line in files with extension .{0}: {1}", extension, amount);
